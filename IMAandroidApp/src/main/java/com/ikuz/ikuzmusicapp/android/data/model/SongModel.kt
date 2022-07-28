@@ -8,7 +8,6 @@ data class SongModel(
      var title: String,
      var artist: String,
      var album: String,
-     var displayName: String,
      var id: Long,
      var duration: Int
 )

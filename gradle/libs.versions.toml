@@ -1,6 +1,7 @@
 [versions]
 
 accompanist = "0.24.13-rc"
+pager = "0.18.0"
 
 agp = "7.2.1"
 refreshVersions = "0.40.2"
@@ -12,7 +13,7 @@ extJunit = "1.1.3"
 espresso = "3.4.0"
 composeThemeAdapter = "1.1.14"
 
-compose = "1.3.0-alpha01"
+compose = "1.2.0-rc03"
 composeCompiler = "1.2.0"
 composeMaterial3 = "1.0.0-alpha14"
 navigation = "2.5.0"
@@ -20,6 +21,10 @@ navigation = "2.5.0"
 dagger = "2.42"
 
 hilt = "1.0.0"
+
+coil = "2.1.0"
+
+glide = "1.5.3"
 
 composeDestinations = "1.6.13-beta"
 
@@ -31,6 +36,8 @@ coroutines = "1.6.0"
 exoPlayer = "2.18.0"
 
 junit = "4.13.2"
+
+room = "2.4.3"
 
 
 [plugins]
@@ -95,8 +102,15 @@ exoPlayer-extension-mediasession = { group = "com.google.android.exoplayer", nam
 #Accompanist
 accompanist-systemUiController = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist"}
-accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist"}
+accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "pager"}
 accompanist-pager-indicators = { group = "com.google.accompanist", name = "accompanist-pager-indicators", version.ref = "accompanist"}
+
+#Coil
+coil-coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+#Room
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
 #Test
 test-junit = { group = "junit", name = "junit", version.ref = "junit" }

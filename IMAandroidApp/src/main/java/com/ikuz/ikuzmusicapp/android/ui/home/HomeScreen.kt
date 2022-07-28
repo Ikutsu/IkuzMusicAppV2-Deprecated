@@ -1,10 +1,5 @@
 package com.ikuz.ikuzmusicapp.android.ui.home
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,33 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ikuz.ikuzmusicapp.android.ui.theme.teal700
 import com.ikuz.ikuzmusicapp.android.R
+import com.ikuz.ikuzmusicapp.android.ui.destinations.ComingDestination
 import com.ikuz.ikuzmusicapp.android.ui.destinations.LocalSongDestination
 import com.ikuz.ikuzmusicapp.android.ui.theme.IMATheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import dagger.hilt.android.AndroidEntryPoint
-
-@AndroidEntryPoint
-class MainFragment : Fragment() {
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireContext()).apply {
-            setContent {
-            }
-        }
-    }
-}
 
 @RootNavGraph(start = true)
 @Destination
@@ -138,7 +117,7 @@ fun SongView(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
-                    .clickable { navigator.navigate(LocalSongDestination) },
+                    .clickable { navigator.navigate(ComingDestination) },
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
