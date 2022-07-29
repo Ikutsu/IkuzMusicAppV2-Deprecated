@@ -4,7 +4,7 @@ import com.ikuz.ikuzmusicapp.android.data.model.AlbumModel
 import com.ikuz.ikuzmusicapp.android.data.model.ArtistModel
 import com.ikuz.ikuzmusicapp.android.data.model.SongModel
 
-data class SongViewModelState(
+data class SongUiState(
     val songList: List<SongModel> = listOf(),
     val artistList: List<ArtistModel> = listOf(),
     val albumList: List<AlbumModel> = listOf()

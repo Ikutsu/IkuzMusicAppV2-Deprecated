@@ -1,9 +1,9 @@
 package com.ikuz.ikuzmusicapp.android.ui.song
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Query
 import com.ikuz.ikuzmusicapp.android.data.model.AlbumModel
 import com.ikuz.ikuzmusicapp.android.data.model.ArtistModel
 import com.ikuz.ikuzmusicapp.android.data.model.SongModel
@@ -21,12 +21,11 @@ class SongViewModel @Inject constructor(
     private val songRepository: SongRepository
 ): ViewModel(){
 
-    val state = MutableStateFlow(SongViewModelState())
+    val state = MutableStateFlow(SongUiState())
     private val _showDialog = MutableStateFlow(false)
     val showDialog: StateFlow<Boolean> = _showDialog.asStateFlow()
     private val _showNotFound = MutableStateFlow(false)
     val showNotFound: StateFlow<Boolean> = _showNotFound.asStateFlow()
-    var query = mutableStateOf("")
     var loading = mutableStateOf(false)
 
     init {
@@ -39,11 +38,11 @@ class SongViewModel @Inject constructor(
                 _showNotFound.value = true
             }else{
                 loading.value = true
-                delay(300)
+                delay(200)
                 state.value = state.value.copy(
-                    songRepository.getSongData(),
-                    songRepository.getArtistData(),
-                    songRepository.getAlbumData()
+                    songList = songRepository.getSongData(),
+                    artistList = songRepository.getArtistData(),
+                    albumList = songRepository.getAlbumData()
                 )
                 loading.value = false
             }
@@ -52,11 +51,22 @@ class SongViewModel @Inject constructor(
 
     fun searchSong(query: String){
         viewModelScope.launch{
-            state.value = state.value.copy(
-                onSongQuery(query),
-                onArtistQuery(query),
-                onAlbumQuery(query)
-            )
+            if (query.isEmpty()){
+                state.value = state.value.copy(
+                    onSongQuery(query),
+                    onArtistQuery(query),
+                    onAlbumQuery(query)
+                )
+            }else if (query.isNotEmpty()){
+                loading.value = true
+                delay(200)
+                state.value = state.value.copy(
+                    onSongQuery(query),
+                    onArtistQuery(query),
+                    onAlbumQuery(query)
+                )
+                loading.value = false
+            }
         }
     }
 //    @Query ("SELECT * FROM SongModel WHERE title LIKE :title")
@@ -69,10 +79,6 @@ class SongViewModel @Inject constructor(
     }
     suspend fun onAlbumQuery(title: String): List<AlbumModel>{
         return songRepository.getAlbumData().filter { it.album.contains(title,true) }
-    }
-
-    fun onQueryChange(query: String){
-        this.query.value = query
     }
 
     fun openDialog(){

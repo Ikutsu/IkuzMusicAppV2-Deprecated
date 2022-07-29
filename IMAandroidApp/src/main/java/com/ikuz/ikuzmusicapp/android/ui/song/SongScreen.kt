@@ -3,9 +3,11 @@ package com.ikuz.ikuzmusicapp.android.ui.song
 import android.Manifest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -15,10 +17,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -52,7 +58,7 @@ enum class TabPage(val icon: Int, val tab: String) {
 }
 
 // TODO: rememberScrollPosition???
-// TODO: List live updates, LiveData
+// TODO: List live updates, LiveData [DONE]
 @Destination
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -106,14 +112,21 @@ fun TopBar(
     }
 }
 
-// TODO: Implement Search functionality. [DONE]-[REVIEW]-[NEED IMPROVE]
-@OptIn(ExperimentalComposeUiApi::class)
+// TODO: Implement Search functionality. [DONE]-[REVIEW]-[NEED IMPROVE]-[DONE]
 @Composable
 fun SearchBar(
     songViewModel: SongViewModel
 ){
-    val query = songViewModel.query.value
+    var query : String by rememberSaveable { mutableStateOf("") }
+    var showClearIcon by rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
+
+    if (query.isEmpty()) {
+        showClearIcon = false
+    } else if (query.isNotEmpty()) {
+        showClearIcon = true
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -125,7 +138,9 @@ fun SearchBar(
     ) {
         BasicTextField(
             value = query,
-            onValueChange = { songViewModel.onQueryChange(it) },
+            onValueChange = { onQueryChange ->
+                query = onQueryChange
+                songViewModel.searchSong(onQueryChange) },
             singleLine = true,
             maxLines = 1,
             textStyle = MaterialTheme.typography.h4,
@@ -137,11 +152,7 @@ fun SearchBar(
             keyboardActions = KeyboardActions(
                 onSearch = {
                     focusManager.clearFocus()
-                    if (query.isNotEmpty()) {
-                        songViewModel.searchSong(query)
-                    }else{
-                        songViewModel.songQuery()
-                    }
+                    songViewModel.searchSong(query)
                 }
             ),
             modifier = Modifier
@@ -155,20 +166,29 @@ fun SearchBar(
                 .fillMaxHeight()
                 .width(48.dp)
         ) {
-            Icon(
-                imageVector = Icons.Filled.Search,
-                contentDescription = "",
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable {
-                        focusManager.clearFocus()
-                        if (query.isNotEmpty()) {
-                            songViewModel.searchSong(query)
-                        } else {
-                            songViewModel.songQuery()
-                        }
-                    }
-            )
+            IconButton(onClick = {
+                if (showClearIcon) {
+                    query = ""
+                    songViewModel.searchSong(query)
+                    focusManager.moveFocus(FocusDirection.Previous)
+                } else {
+                    focusManager.clearFocus()
+                    songViewModel.searchSong(query)
+                }
+            }) {
+                val traillingIcon = if (showClearIcon) {
+                    Icons.Filled.Clear
+                } else {
+                    Icons.Filled.Search
+                }
+                Icon(
+                    imageVector = traillingIcon,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(24.dp)
+                )
+            }
+
         }
     }
 }
@@ -214,7 +234,7 @@ fun TabBar (selectedIndex: Int, onSelectedTab: (TabPage) -> Unit, pagerState: Pa
     }
 }
 
-// TODO: Add loading screen while fetching data to improve user experience. [DONE]-[REVIEW]-[NEED IMPROVE]
+// TODO: Add loading screen while fetching data to improve user experience. [REVIEW]-[NEED TO IMPROVE] Reason: Add loading screen for each tab.
 // TODO: Add the screen when no songs/artist/album are found. [DONE]
 // TODO: loading screen while LazyColumn is loading.
 @OptIn(ExperimentalPagerApi::class)
@@ -226,9 +246,17 @@ fun Content(
     val showNotFoundState by songViewModel.showNotFound.collectAsState()
     val pageState = rememberPagerState()
     val scope = rememberCoroutineScope()
+    val focusManager = LocalFocusManager.current
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onPress = {
+                        focusManager.clearFocus()
+                    }
+                )
+            },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TabBar(
@@ -245,7 +273,6 @@ fun Content(
             count = TabPage.values().size,
             itemSpacing = 8.dp,
         ) { index ->
-
                 when (index) {
                     0 ->
                         Box(
@@ -257,7 +284,8 @@ fun Content(
                                     .fillMaxWidth()
                                     .fillMaxHeight()
                                     .padding(top = 10.dp),
-                                verticalArrangement = Arrangement.Top
+                                verticalArrangement = Arrangement.Top,
+
                             ){
                                 items( items = songViewModelState.songList) {
                                     SongItem(it)
