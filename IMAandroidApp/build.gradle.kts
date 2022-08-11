@@ -1,17 +1,22 @@
 @file:Suppress("SpellCheckingInspection")
 
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
+    id ("com.huawei.agconnect")
     kotlin("kapt")
     alias(libs.plugins.agp)
     alias(libs.plugins.kotlin)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    id ("dagger.hilt.android.plugin")
 }
 
 apply (plugin = "dagger.hilt.android.plugin")
 
 android {
+
     compileSdk = 32
     defaultConfig {
         applicationId = "com.ikuz.ikuzmusicapp.android"
@@ -31,22 +36,29 @@ android {
                 )
             }
         }
-
     }
-//    productFlavors {
-//        create("Beta") {
-//            versionName = "0.0.1-beta"
-//        }
-//        create("release") {
-//            versionName = "1.0-release"
-//        }
-//    }
+    val localProperties = gradleLocalProperties(rootDir)
+    signingConfigs {
+        create("release") {
+            storeFile = file("IMA.jks")
+            keyAlias = localProperties["keyAlias"] as String?
+            keyPassword = localProperties["keyPassword"] as String?
+            storePassword = localProperties["storePassword"] as String?
+        }
+    }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = true
             isDebuggable = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android.txt"),
+                "proguard-rules.pro"
+            )
         }
         getByName("debug") {
+            applicationIdSuffix = ".debug"
+            isMinifyEnabled = false
             isDebuggable = true
         }
     }
@@ -73,6 +85,8 @@ android {
         }
     }
 }
+
+
 
 dependencies {
     implementation (project(":shared"))
@@ -101,7 +115,7 @@ dependencies {
     implementation(libs.androidx.navigationFragment)
     implementation(libs.androidx.navigationUi)
 
-    implementation(libs.compose.destinations.core)
+    implementation(libs.compose.destinations.animations.core)
     ksp(libs.compose.destinations.ksp)
 
     implementation(libs.hilt.dagger)
@@ -118,15 +132,24 @@ dependencies {
     implementation(libs.accompanist.systemUiController)
     implementation(libs.accompanist.permissions)
     implementation(libs.accompanist.pager)
-    implementation (libs.accompanist.pager.indicators)
+    implementation(libs.accompanist.pager.indicators)
+    implementation(libs.accompanist.flowlayout)
 
     testImplementation(libs.test.junit)
 
     implementation(libs.coil.coil)
 
+    implementation(libs.androidx.constraintlayout)
+
     implementation(libs.room.runtime)
-    annotationProcessor(libs.room.compiler)
     ksp(libs.room.compiler)
+
+    implementation(libs.smartToolFactory.sliders)
+
+    implementation(libs.shared.elements)
+
+    implementation(libs.hms.audiokit)
+    implementation(libs.hms.agconnect.core)
 
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.espressoCore)

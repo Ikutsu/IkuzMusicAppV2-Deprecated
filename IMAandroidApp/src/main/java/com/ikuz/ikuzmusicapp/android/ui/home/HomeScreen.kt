@@ -10,6 +10,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,11 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ikuz.ikuzmusicapp.android.ui.theme.teal700
 import com.ikuz.ikuzmusicapp.android.R
 import com.ikuz.ikuzmusicapp.android.ui.destinations.ComingDestination
 import com.ikuz.ikuzmusicapp.android.ui.destinations.LocalSongDestination
-import com.ikuz.ikuzmusicapp.android.ui.theme.IMATheme
+import com.ikuz.ikuzmusicapp.android.ui.player.bottomSheetContent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -32,8 +34,11 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun MainScreen(
     navigator: DestinationsNavigator
 ) {
-    IMATheme {
-        Box(modifier = Modifier.fillMaxSize()) {
+    val systemUiController = rememberSystemUiController()
+        SideEffect {
+            systemUiController.setSystemBarsColor(Color.Transparent)
+        }
+        Box(modifier = Modifier.fillMaxSize().statusBarsPadding()) {
             Column(modifier = Modifier.padding(16.dp)) {
                 UserInfo()
                 Spacer(modifier = Modifier.height(24.dp))
@@ -42,7 +47,7 @@ fun MainScreen(
                 OtherOpt()
             }
         }
-    }
+        bottomSheetContent(modifier = Modifier, enable = true)
 }
 
 @Composable
@@ -158,6 +163,7 @@ fun OtherOpt(){
         Column(
             modifier = Modifier
                 .weight(1f)
+//                .clickable {  }
         ) {
             OtherItems(id = R.drawable.ic_note, content = "Update Notes", text = "Update Notes")
         }

@@ -1,0 +1,296 @@
+{
+  ConstraintSets: {
+    start: {
+      player_art: {
+        width: 55,
+        height: 55,
+        start: ['box', 'start', 8],
+        bottom: ['box', 'bottom', 8],
+        top: ['box', 'top', 8],
+        alpha: 1,
+        custom: {
+          radius: 10
+        }
+      },
+      progress_bar: {
+        width: 'spread',
+        height: 4,
+        start: ['box', 'start'],
+        top: ['box', 'top'],
+        end: ['box', 'end'],
+      },
+      collapse_song_title: {
+        width: 'spread',
+        start: ['box', 'start', 70],
+        top: ['box', 'top', 15],
+        end: ['collapse_prev', 'start'],
+        bottom: ['collapse_song_artist', 'top'],
+      },
+      collapse_song_artist: {
+        width: 'spread',
+        start: ['box', 'start', 70],
+        top: ['collapse_song_title', 'bottom',],
+        end: ['collapse_prev', 'start'],
+        bottom: ['box', 'bottom', 15],
+      },
+      collapse_prev: {
+        top: ['collapse_pause', 'top'],
+        end: ['collapse_pause', 'start',],
+        bottom: ['collapse_pause', 'bottom'],
+      },
+      collapse_pause: {
+        top: ['collapse_next', 'top'],
+        end: ['collapse_next', 'start', ],
+        bottom: ['collapse_next', 'bottom'],
+      },
+      collapse_next: {
+        top: ['box', 'top'],
+        end: ['box', 'end', 16],
+        bottom: ['box', 'bottom'],
+      },
+      expand_back: {
+        start: ['box', 'start', 28],
+        top: ['box', 'top', 8],
+      },
+      expand_song_title: {
+        width: 'spread',
+        start: ['box', 'start', 30],
+        top: ['box', 'top', 434],
+        end: ['expand_more', 'start',8],
+      },
+      expand_song_artist: {
+        width: 'spread',
+        start: ['box', 'start', 30],
+        top: ['expand_song_title', 'bottom', 8],
+        end: ['expand_more', 'start',8],
+      },
+      expand_more: {
+        top: ['box', 'top', 426],
+        end: ['box', 'end', 22],
+      },
+      expand_duration: {
+        start: ['box', 'start', 28],
+        top: ['expand_song_artist', 'bottom', 104],
+        alpha: 0
+      },
+      expand_progress: {
+        width: 'spread',
+        start: ['expand_duration', 'end', 4],
+        top: ['box', 'top', 574],
+        end: ['expand_total', 'start', 4],
+        alpha: 0
+      },
+      expand_total: {
+        top: ['expand_more', 'bottom', 120],
+        end: ['box', 'end', 28],
+        alpha: 0
+      },
+      expand_prev: {
+        start: ['box', 'start', 80],
+        top: ['expand_progress', 'bottom', 46],
+        alpha: 0
+      },
+      expand_pause: {
+        start: ['expand_prev', 'end'],
+        top: ['expand_progress', 'bottom', 46],
+        end: ['expand_next', 'start'],
+        alpha: 0
+      },
+      expand_next: {
+        end: ['box', 'end', 80],
+        top: ['expand_progress', 'bottom', 46],
+        alpha: 0
+      },
+      box: {
+        width: 'spread',
+        height: 75,
+        start: ['parent', 'start'],
+        end: ['parent', 'end'],
+        bottom: ['parent', 'bottom'],
+      },
+      bg: {
+        height: 75,
+        width: 'spread',
+        start: ['parent', 'start'],
+        end: ['parent', 'end'],
+        bottom: ['parent', 'bottom'],
+      }
+    },
+    end: {
+      player_art: {
+        width: 'spread',
+        start: ['box', 'start', 30],
+        top: ['expand_back', 'bottom', 16],
+        end: ['box', 'end', 30],
+        alpha: 1,
+        custom: {
+          radius: 10
+        }
+      },
+      progress_bar: {
+        width: 'spread',
+        height: 4,
+        start: ['box', 'start'],
+        top: ['box', 'top'],
+        end: ['box', 'end'],
+      },
+      collapse_song_title: {
+        width: 'spread',
+        start: ['box', 'start', 70],
+        top: ['box', 'top', 15],
+        end: ['collapse_prev', 'start',],
+        bottom: ['collapse_song_artist', 'top'],
+      },
+      collapse_song_artist: {
+        width: 'spread',
+        start: ['box', 'start', 70],
+        top: ['collapse_song_title', 'bottom',],
+        end: ['collapse_prev', 'start', 16],
+      },
+      collapse_prev: {
+        top: ['collapse_pause', 'top'],
+        end: ['collapse_pause', 'start', ],
+        bottom: ['collapse_pause', 'bottom'],
+      },
+      collapse_pause: {
+        top: ['collapse_next', 'top'],
+        end: ['collapse_next', 'start', ],
+        bottom: ['collapse_next', 'bottom'],
+      },
+      collapse_next: {
+        top: ['box', 'top'],
+        end: ['box', 'end', 16],
+      },
+      expand_back: {
+        start: ['box', 'start', 28],
+        top: ['box', 'top'],
+      },
+      expand_song_title: {
+        width: 'spread',
+        start: ['box', 'start', 30],
+        top: ['player_art', 'bottom', 16],
+        end: ['expand_more', 'start',8],
+      },
+      expand_song_artist: {
+        width: 'spread',
+        start: ['box', 'start', 30],
+        top: ['expand_song_title', 'bottom', 8],
+        end: ['expand_more', 'start',8],
+      },
+      expand_more: {
+        top: ['player_art', 'bottom', 16],
+        end: ['box', 'end', 22],
+      },
+      expand_duration: {
+        start: ['box', 'start', 28],
+        top: ['expand_song_artist', 'bottom', 112],
+        alpha: 1
+      },
+      expand_progress: {
+        width: 'spread',
+        start: ['expand_duration', 'end', 4],
+        top: ['player_art', 'bottom', 186],
+        end: ['expand_total', 'start', 4],
+        alpha: 1
+      },
+      expand_total: {
+        top: ['expand_more', 'bottom', 122],
+        end: ['box', 'end', 28],
+        alpha: 1
+      },
+      expand_prev: {
+        start: ['box', 'start', 80],
+        top: ['expand_progress', 'bottom', 46],
+        alpha: 1
+      },
+      expand_pause: {
+        start: ['expand_prev', 'end'],
+        top: ['expand_progress', 'bottom', 46],
+        end: ['expand_next', 'start'],
+        alpha: 1
+      },
+      expand_next: {
+        end: ['box', 'end', 80],
+        top: ['expand_progress', 'bottom', 46],
+        alpha: 1
+      },
+      box: {
+        width: 'spread',
+        height: { value: 'parent' },
+        start: ['parent', 'start'],
+        end: ['parent', 'end'],
+        top: ['parent', 'top'],
+        bottom: ['parent', 'bottom'],
+      },
+      bg: {
+        width: 'spread',
+        height: { value: 'parent' },
+        start: ['parent', 'start'],
+        end: ['parent', 'end'],
+        top: ['parent', 'top'],
+        bottom: ['parent', 'bottom']
+      }
+    }
+  },
+  Transitions: {
+    default: {
+      from: 'start',
+      to: 'end',
+      duration: 300,
+      KeyFrames: {
+        KeyAttributes: [
+          {
+            target: ['collapse_song_title'],
+            frames: [0, 6, 100],
+            alpha: [1, 0, 0]
+          },
+          {
+            target: ['collapse_song_artist'],
+            frames: [0, 6, 100],
+            alpha: [1, 0, 0]
+          },
+          {
+            target: ['progress_bar'],
+            frames: [0, 6, 100],
+            alpha: [1, 0, 0]
+          },
+          {
+            target: ['collapse_prev'],
+            frames: [0, 10, 100],
+            alpha: [1, 0, 0]
+          },
+          {
+            target: ['collapse_pause'],
+            frames: [0, 10, 100],
+            alpha: [1, 0, 0]
+          },
+          {
+            target: ['collapse_next'],
+            frames: [0, 10, 100],
+            alpha: [1, 0, 0]
+          },
+          {
+            target: ['expand_back'],
+            frames: [0, 60, 80, 100],
+            alpha: [0, 0, 0.5, 1]
+          },
+          {
+            target: ['expand_song_title'],
+            frames: [0, 55, 100],
+            alpha: [0, 0, 1]
+          },
+          {
+            target: ['expand_song_artist'],
+            frames: [0, 55, 100],
+            alpha: [0, 0, 1]
+          },
+          {
+            target: ['expand_more'],
+            frames: [0, 55, 100],
+            alpha: [0, 0, 1]
+          }
+        ]
+      }
+    }
+  }
+}
