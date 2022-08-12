@@ -10,7 +10,7 @@ A Music App build using jetpack compose
 # Until Realese 0.1 ver
 - [x] Fetch local song, artist and album
 - [x] Search local data
-- [ ] Detail screen of artist and album
+- [x] Detail screen of artist and album
 - [ ] Player
 
 # Future feature
