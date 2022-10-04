@@ -71,7 +71,7 @@ class LocalSongResolver
                         val artist = getString(artistColumn)
                         val album = getString(albumColumn)
                         val id = getLong(idColumn)
-                        val duration = getInt(durationColumn)
+                        val duration = getLong(durationColumn)
                         val albumId = getLong(albumIdColumn)
                         val uri = ContentUris.withAppendedId(
                             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,

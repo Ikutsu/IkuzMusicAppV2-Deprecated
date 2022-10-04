@@ -123,11 +123,13 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation (libs.hilt.navigationCompose)
 
-    implementation (libs.exoPlayer.exoPlayer)
-    implementation (libs.exoPlayer.extension.mediasession)
+    implementation(libs.media3.exoplayer)
+    implementation(libs.media3.session)
+    implementation(libs.media3.common)
 
     implementation(libs.kotlin.coroutines.android)
     implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.coroutines.guava)
 
     implementation(libs.accompanist.systemUiController)
     implementation(libs.accompanist.permissions)

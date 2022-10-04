@@ -9,6 +9,6 @@ data class SongListModel(
      val artist: String,
      val album: String,
      val id: Long,
-     val duration: Int,
+     val duration: Long,
      val albumId: Long
 )

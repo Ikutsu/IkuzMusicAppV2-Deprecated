@@ -34,7 +34,7 @@ ksp = "1.7.0-1.0.6"
 kotlin = "1.7.0"
 coroutines = "1.6.0"
 
-exoPlayer = "2.18.0"
+media3 = "1.0.0-beta02"
 
 junit = "4.13.2"
 
@@ -46,6 +46,7 @@ hms = "1.5.0.300"
 agcp = "1.7.0.300"
 
 sharedElements = "0.1.0-SNAPSHOT"
+
 
 [plugins]
 
@@ -98,6 +99,7 @@ compose-destinations-ksp = { group = "io.github.raamcosta.compose-destinations",
 #Kotlin coroutines
 kotlin-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlin-coroutines-guava = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-guava", version.ref = "coroutines" }
 
 #Hilt (dagger)
 hilt-dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
@@ -105,9 +107,10 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger" }
 hilt-navigationCompose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt" }
 
-#Exoplayer
-exoPlayer-exoPlayer = { group = "com.google.android.exoplayer", name = "exoplayer", version.ref = "exoPlayer" }
-exoPlayer-extension-mediasession = { group = "com.google.android.exoplayer", name = "exoplayer", version.ref = "exoPlayer"}
+#media3
+media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }
+media3-session = { group = "androidx.media3", name = "media3-session", version.ref = "media3" }
+media3-common = { group = "androidx.media3", name = "media3-common", version.ref = "media3" }
 
 #Accompanist
 accompanist-systemUiController = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
